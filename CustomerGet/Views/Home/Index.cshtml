@@ -1,0 +1,22 @@
+﻿@model CustomerGet.Models.HomeModel
+
+<div>
+    Customer List
+</div>
+
+<table width="300">
+    @foreach (var customer in Model.Customers)
+    {
+        <tr>
+            <td width="40%">
+                @customer.FirstName
+            </td>
+            <td width="40%">
+                @customer.LastName
+            </td>
+            <td width="20%">
+                @Html.ActionLink("View", "Customer", new { CustomerId = customer.id })
+            </td>
+        </tr>
+    }
+</table>
