@@ -115,6 +115,7 @@ namespace CustomerGet.Service.Tests.Services
         public void GetCustomerWithEmptyApiResultReturnsNullObject()
         {
             //Setup
+            var id = new Guid();
             var customersJson = string.Empty;
             var customerApi = new Mock<ICustomerServiceApi>();
             customerApi.Setup(arg => arg.GetCustomerAsync(It.IsAny<Guid>()))
@@ -123,12 +124,12 @@ namespace CustomerGet.Service.Tests.Services
             //Run
             var customerDataFactory = new ShelteredDepthsDataFactory(customerApi.Object);
             var customerService = new CustomerService(customerDataFactory);
-            var resultJson = customerService.GetCustomer(new Guid());
+            var resultJson = customerService.GetCustomer(id);
 
             //Has Completed
             Assert.IsNotNull(resultJson, "Json incorrectly returns null on Empty API response");
             //Is an empty Customers object
-            var nullCustomerString = JsonConvert.SerializeObject(new Customer());
+            var nullCustomerString = JsonConvert.SerializeObject(new Customer() { id = id.ToString() });
             Assert.IsTrue(resultJson == nullCustomerString, "Json is not an empty Customers response");
         }
     }

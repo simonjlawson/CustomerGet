@@ -30,7 +30,9 @@ namespace CustomerGet.Service.DataFactories
             {
                 try
                 {
-                    apiCustomer = JsonConvert.DeserializeObject<CustomerRecord>(apiResult.Result);
+                    var customerObj = JsonConvert.DeserializeObject<CustomerRecord>(apiResult.Result);
+                    if (customerObj != null)
+                        apiCustomer = customerObj;
                 }
                 catch (Exception e)
                 {
@@ -59,7 +61,9 @@ namespace CustomerGet.Service.DataFactories
             {
                 try
                 {
-                    apiCustomers = JsonConvert.DeserializeObject<Customers>(apiResult.Result);
+                    var customersObj = JsonConvert.DeserializeObject<Customers>(apiResult.Result);
+                    if (customersObj != null)
+                        apiCustomers = customersObj;
                 }
                 catch (Exception e)
                 {
