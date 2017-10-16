@@ -19,11 +19,12 @@ namespace CustomerGet.Service.DataFactories
         public Common.Models.Customer GetCustomer(Guid id)
         {
             CustomerRecord apiCustomer = new CustomerRecord();
+            apiCustomer.customer = new Customer { id = id.ToString() };
 
             var apiResult = Task.Run(() => Api.GetCustomerAsync(id));
 
             //For the sake of example added a 2 second timeout for calling functions
-            apiResult.Wait(100000);
+            apiResult.Wait(2000);
 
             if (apiResult.IsCompleted)
             {
@@ -33,7 +34,7 @@ namespace CustomerGet.Service.DataFactories
                 }
                 catch (Exception e)
                 {
-                    apiCustomer.customer.id = id.ToString();
+                    //Leave apiCustomers in it's default state
                 }
             }
 
@@ -51,13 +52,19 @@ namespace CustomerGet.Service.DataFactories
             
             var apiResult = Task.Run(() => Api.GetCustomersAsync());
 
-            //Not ideal but for the sake of example added a 2 second timeout for calling functions
-            apiResult.Wait(100000);
+            //For the sake of example added a 2 second timeout for calling functions
+            apiResult.Wait(2000);
 
             if (apiResult.IsCompleted)
             {
-                var apiResultJson = apiResult.Result;
-                apiCustomers = JsonConvert.DeserializeObject<Customers>(apiResultJson);
+                try
+                {
+                    apiCustomers = JsonConvert.DeserializeObject<Customers>(apiResult.Result);
+                }
+                catch (Exception e)
+                {
+                    //Leave apiCustomers in it's default state
+                }
             }
 
             //Map Feed object to Common object
