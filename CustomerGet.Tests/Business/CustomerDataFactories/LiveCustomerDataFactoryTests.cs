@@ -77,5 +77,66 @@ namespace CustomerGet.Tests.Business.CustomerDataFactories
             Assert.IsNotNull(customers.ListOfCustomers);
             Assert.IsFalse(customers.ListOfCustomers.Any());
         }
+
+        [TestMethod]
+        public void GetCustomerReturnsData()
+        {
+            // Arrange
+            var httpClient = new HttpClient();
+
+            var customersJson = File.ReadAllText(@"Business\CustomerDataFactories\Json\customer.json");
+            var customerApi = new Mock<ICustomerServiceApi>();
+            customerApi.Setup(arg => arg.GetAsync(It.IsAny<Guid>()))
+                .Returns(Task.FromResult(customersJson));
+
+            var factory = new LiveCustomerDataFactory(customerApi.Object);
+
+            // Act
+            var customer = factory.Get(new Guid());
+
+            // Assert
+            Assert.IsNotNull(customer);
+            Assert.AreEqual(customer.FirstName, "David");
+        }
+
+        [TestMethod]
+        public void GetCustomerReturnsEmptyCustomerWithNoApiResponse()
+        {
+            // Arrange
+            var httpClient = new HttpClient();
+
+            var customerApi = new Mock<ICustomerServiceApi>();
+            customerApi.Setup(arg => arg.GetAsync(It.IsAny<Guid>()))
+                .Returns(Task.FromResult(string.Empty));
+
+            var factory = new LiveCustomerDataFactory(customerApi.Object);
+
+            // Act
+            var customer = factory.Get(new Guid());
+
+            // Assert
+            Assert.IsNotNull(customer);
+            Assert.AreEqual(customer.id, new Guid().ToString());
+        }
+
+        [TestMethod]
+        public void GetCustomerReturnsEmptyCustomerWithInvalidApiResponse()
+        {
+            // Arrange
+            var httpClient = new HttpClient();
+
+            var customerApi = new Mock<ICustomerServiceApi>();
+            customerApi.Setup(arg => arg.GetAsync(It.IsAny<Guid>()))
+                .Returns(Task.FromResult("<Invalid>Response</Invalid>"));
+
+            var factory = new LiveCustomerDataFactory(customerApi.Object);
+
+            // Act
+            var customer = factory.Get(new Guid());
+
+            // Assert
+            Assert.IsNotNull(customer);
+            Assert.AreEqual(customer.id, new Guid().ToString());
+        }
     }
 }
