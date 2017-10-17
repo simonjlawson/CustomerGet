@@ -4,7 +4,9 @@
     Customer List
 </div>
 
-<table width="300">
+<p></p>
+
+<table width="300" border="1">
     @foreach (var customer in Model.Customers)
     {
         <tr>
@@ -20,3 +22,13 @@
         </tr>
     }
 </table>
+
+<p></p>
+
+<div>
+    @{ 
+        var count = Model.Customers.Count;
+        var countText = (Model.Customers.Count == 1) ? "result" : "results";
+    } 
+    @count @countText
+</div>

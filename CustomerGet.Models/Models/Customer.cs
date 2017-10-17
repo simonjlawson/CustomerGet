@@ -3,6 +3,12 @@ using System;
 
 namespace CustomerGet.Common.Models
 {
+    public class CustomerRecord
+    {
+        [JsonProperty("customer")]
+        public Customer customer { get; set; }
+    }
+
     public class Customer
     {
         public string id;

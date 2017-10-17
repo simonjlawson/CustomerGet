@@ -35,6 +35,7 @@ namespace CustomerGet.Service
             }
             catch (Exception e)
             {
+                log.Error("GetCustomer failed", e);
                 return req.CreateResponse(HttpStatusCode.BadRequest, $"An error has occured: {e}");
             }
 

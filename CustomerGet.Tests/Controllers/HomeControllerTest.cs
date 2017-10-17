@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CustomerGet.Controllers;
+using CustomerGet.Business.Functions;
 
 namespace CustomerGet.Tests.Controllers
 {
@@ -13,7 +14,8 @@ namespace CustomerGet.Tests.Controllers
         public void Index()
         {
             // Arrange
-            HomeController controller = new HomeController();
+            var testCusomterDataFactory = new TestCustomerDataFactory();
+            var controller = new HomeController(testCusomterDataFactory);
 
             // Act
             ViewResult result = controller.Index() as ViewResult;

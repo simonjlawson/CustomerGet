@@ -18,13 +18,13 @@ namespace CustomerGet.Service.DataFactories
 
         public Common.Models.Customer GetCustomer(Guid id)
         {
-            CustomerRecord apiCustomer = new CustomerRecord();
-            apiCustomer.customer = new Customer { id = id.ToString() };
+            CustomerRecord apiCustomer = new CustomerRecord()
+                { customer = new Customer { id = id.ToString() } };
 
             var apiResult = Task.Run(() => Api.GetCustomerAsync(id));
 
-            //For the sake of example added a 2 second timeout for calling functions
-            apiResult.Wait(2000);
+            //For the sake of example added a 5 second timeout for calling functions
+            apiResult.Wait(5000);
 
             if (apiResult.IsCompleted)
             {
@@ -36,7 +36,7 @@ namespace CustomerGet.Service.DataFactories
                 }
                 catch (Exception e)
                 {
-                    //Leave apiCustomers in it's default state
+                    //Failure will return a default object
                 }
             }
 
@@ -51,11 +51,11 @@ namespace CustomerGet.Service.DataFactories
         {
             Customers apiCustomers = new Customers()
                 { ListOfCustomers = new System.Collections.Generic.List<Customer>() };
-            
+
             var apiResult = Task.Run(() => Api.GetCustomersAsync());
 
-            //For the sake of example added a 2 second timeout for calling functions
-            apiResult.Wait(2000);
+            //For the sake of example added a 5 second timeout for calling functions
+            apiResult.Wait(5000);
 
             if (apiResult.IsCompleted)
             {
@@ -67,7 +67,7 @@ namespace CustomerGet.Service.DataFactories
                 }
                 catch (Exception e)
                 {
-                    //Leave apiCustomers in it's default state
+                    //Failure will return a default object
                 }
             }
 

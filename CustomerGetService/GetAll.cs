@@ -27,6 +27,7 @@ namespace CustomerGet.Service
             }
             catch (Exception e)
             {
+                log.Error("GetAll failed",e);
                 return req.CreateResponse(HttpStatusCode.BadRequest, $"An error has occured {e.Message}");
             }
 

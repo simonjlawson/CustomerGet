@@ -91,6 +91,27 @@ namespace CustomerGet.Service.Tests.Services
         }
 
         [TestMethod]
+        public void GetCustomersWithInvalidApiResultReturnsNullObject()
+        {
+            //Setup
+            var customersJson = "<Invalid>Text</Invalid>";
+            var customerApi = new Mock<ICustomerServiceApi>();
+            customerApi.Setup(arg => arg.GetCustomersAsync())
+                .Returns(Task.FromResult(customersJson));
+
+            //Run
+            var customerDataFactory = new ShelteredDepthsDataFactory(customerApi.Object);
+            var customerService = new CustomerService(customerDataFactory);
+            var resultJson = customerService.GetCustomers();
+
+            //Has Completed
+            Assert.IsNotNull(resultJson, "Json incorrectly returns null on Empty API response");
+            //Is an empty Customers object
+            var nullCustomersString = JsonConvert.SerializeObject(new Customers() { ListOfCustomers = new List<Customer>() });
+            Assert.IsTrue(resultJson == nullCustomersString, "Json is not an empty Customers response");
+        }
+
+        [TestMethod]
         public void GetCustomerAllReturnsObject()
         {
             //Setup
@@ -113,6 +134,28 @@ namespace CustomerGet.Service.Tests.Services
 
         [TestMethod]
         public void GetCustomerWithEmptyApiResultReturnsNullObject()
+        {
+            //Setup
+            var id = new Guid();
+            var customersJson = "<Invalid>Text</Invalid>";
+            var customerApi = new Mock<ICustomerServiceApi>();
+            customerApi.Setup(arg => arg.GetCustomerAsync(It.IsAny<Guid>()))
+                .Returns(Task.FromResult(customersJson));
+
+            //Run
+            var customerDataFactory = new ShelteredDepthsDataFactory(customerApi.Object);
+            var customerService = new CustomerService(customerDataFactory);
+            var resultJson = customerService.GetCustomer(id);
+
+            //Has Completed
+            Assert.IsNotNull(resultJson, "Json incorrectly returns null on Empty API response");
+            //Is an empty Customers object
+            var nullCustomerString = JsonConvert.SerializeObject(new Customer() { id = id.ToString() });
+            Assert.IsTrue(resultJson == nullCustomerString, "Json is not an empty Customers response");
+        }
+
+        [TestMethod]
+        public void GetCustomerWithInvalidApiResultReturnsNullObject()
         {
             //Setup
             var id = new Guid();

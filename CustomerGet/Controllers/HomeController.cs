@@ -3,20 +3,25 @@ using System.Web.Mvc;
 using System;
 using System.Linq;
 using CustomerGet.Common.Models;
+using CustomerGet.Business.Functions;
 
 namespace CustomerGet.Controllers
 {
     public class HomeController : Controller
     {
+        private ICustomerDataFactory CustomerDataFactory;
+
+        public HomeController(ICustomerDataFactory customerDataFactory)
+        {
+            CustomerDataFactory = customerDataFactory;
+        }
+
         public ActionResult Index()
         {
             var model = new HomeModel();
 
-            var customers = Business.Functions.GetAllCustomers.Get();
-
-            model.Customers = customers.ToList();
-            //model.Customers.Add(new Customer() { id=new Guid(), FirstName = "Simon1" });
-            //model.Customers.Add(new Customer() { id = new Guid(), FirstName = "Simon2" });
+            var customers = CustomerDataFactory.GetAll();
+            model.Customers = customers.ListOfCustomers.ToList();
 
             return View(model);
         }
@@ -32,7 +37,7 @@ namespace CustomerGet.Controllers
             if (!Guid.TryParse(CustomerId, out idGuid))
                 return View(model);
 
-            var customer = Business.Functions.GetCustomer.Get(idGuid);
+            var customer = CustomerDataFactory.Get(idGuid);
             model.Customer = customer;
 
             return View(model);
