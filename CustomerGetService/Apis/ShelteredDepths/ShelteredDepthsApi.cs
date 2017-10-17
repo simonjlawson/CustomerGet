@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace CustomerGet.Service.Apis
 {
+    /// <summary>
+    /// Reads the Customer API
+    /// </summary>
     public class ShelteredDepthsApi : ICustomerServiceApi
     {
         public async Task<string> GetCustomersAsync()

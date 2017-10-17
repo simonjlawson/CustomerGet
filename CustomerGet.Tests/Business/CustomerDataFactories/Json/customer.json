@@ -1,9 +1,7 @@
 {
-  "customer": {
-    "id": "be1d35af-6020-4445-9451-f13facfcfc9a",
-    "firstName": "David",
-    "lastName": "Bond",
-    "gender": "Male",
-    "title": "Mr"
-  }
+  "id": "be1d35af-6020-4445-9451-f13facfcfc9a",
+  "firstname": "David",
+  "lastname": "Bond",
+  "gender": "Male",
+  "title": "Mr"
 }

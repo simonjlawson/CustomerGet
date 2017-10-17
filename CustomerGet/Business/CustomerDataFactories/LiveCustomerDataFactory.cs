@@ -8,6 +8,9 @@ using System.Configuration;
 
 namespace CustomerGet.Business.Functions
 {
+    /// <summary>
+    /// Accesses the backend API and converts the responses to Customer objects
+    /// </summary>
     public class LiveCustomerDataFactory : ICustomerDataFactory
     {
         private ICustomerServiceApi Api;
@@ -15,8 +18,12 @@ namespace CustomerGet.Business.Functions
         public LiveCustomerDataFactory(ICustomerServiceApi api)
         {
             Api = api;
-
         }
+
+        /// <summary>
+        /// Get all Customers
+        /// </summary>
+        /// <returns>A list of Customers</returns>
         public Customers GetAll()
         {
             Customers customers = new Customers() { ListOfCustomers = new List<Customer>() }; ;
@@ -24,7 +31,7 @@ namespace CustomerGet.Business.Functions
             try
             {
                 var task = Task.Run(() => Api.GetAllAsync());
-                task.Wait(2000);
+                task.Wait(5000);
 
                 if (task.IsCompleted)
                 { 
@@ -40,6 +47,11 @@ namespace CustomerGet.Business.Functions
             return customers;
         }
 
+        /// <summary>
+        /// Get a Customer record by GUID
+        /// </summary>
+        /// <param name="id">Customer Id</param>
+        /// <returns>A Customer record, returns a customer record with empty fields if not found</returns>
         public Customer Get(Guid id)
         {
             Customer customer = new Customer() { id = id.ToString() };
@@ -47,18 +59,19 @@ namespace CustomerGet.Business.Functions
             try
             {
                 var task = Task.Run(() => Api.GetAsync(id));
-                task.Wait(2000);
+                task.Wait(5000);
 
                 if (task.IsCompleted)
                 {
                     if (task.Result != null || task.Result != string.Empty)
                     {
-                        var customerRecord = JsonConvert.DeserializeObject<CustomerRecord>(task.Result);
-                        customer = customerRecord.customer;
+                        var customerObj = JsonConvert.DeserializeObject<Customer>(task.Result);
+                        if (customerObj != null && customerObj.FirstName != string.Empty)
+                            customer = customerObj;
                     }
                 }
             }
-            catch (Exception e)
+            catch
             {
                 //Failure returns a default object
             }

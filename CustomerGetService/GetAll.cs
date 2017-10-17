@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -9,6 +8,7 @@ using System;
 using CustomerGet.Service.DataFactories;
 using CustomerGet.Service.Services;
 using CustomerGet.Service.Apis;
+using System.Net.Http.Headers;
 
 namespace CustomerGet.Service
 {
@@ -21,6 +21,7 @@ namespace CustomerGet.Service
 
             try
             {
+                //TODO: Implement IOC
                 var customerDataFactory = new ShelteredDepthsDataFactory(new ShelteredDepthsApi());
                 var customerService = new CustomerService(customerDataFactory);
                 resultJson = customerService.GetCustomers();
@@ -31,9 +32,10 @@ namespace CustomerGet.Service
                 return req.CreateResponse(HttpStatusCode.BadRequest, $"An error has occured {e.Message}");
             }
 
+            var jsonFormatter = new System.Net.Http.Formatting.JsonMediaTypeFormatter();
             return resultJson == null
                 ? req.CreateResponse(HttpStatusCode.BadRequest, "No data found")
-                : req.CreateResponse(HttpStatusCode.OK, resultJson);
+                : req.CreateResponse(HttpStatusCode.OK, resultJson, jsonFormatter, new MediaTypeWithQualityHeaderValue("application/json"));
         }
     }
 }

@@ -20,7 +20,6 @@ namespace CustomerGet
         {
             var container = new UnityContainer();
 
-            //container.RegisterType<ICustomerDataFactory, TestCustomerDataFactory>();
             container.RegisterType<ICustomerDataFactory, LiveCustomerDataFactory>();
             container.RegisterType<ICustomerServiceApi, CustomerServiceApi>();
 

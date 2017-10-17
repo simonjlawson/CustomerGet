@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CustomerGet.Models
 {
-    public class HomeModel
+    public class HomeViewModel
     {
         public List<Customer> Customers { get; set; }
     }

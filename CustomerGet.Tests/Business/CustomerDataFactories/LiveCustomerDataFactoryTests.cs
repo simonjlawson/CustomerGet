@@ -19,8 +19,6 @@ namespace CustomerGet.Tests.Business.CustomerDataFactories
         public void GetAllReturnsAllData()
         {
             // Arrange
-            var httpClient = new HttpClient();
-
             var customersJson = File.ReadAllText(@"Business\CustomerDataFactories\Json\customers.json");
             var customerApi = new Mock<ICustomerServiceApi>();
             customerApi.Setup(arg => arg.GetAllAsync())

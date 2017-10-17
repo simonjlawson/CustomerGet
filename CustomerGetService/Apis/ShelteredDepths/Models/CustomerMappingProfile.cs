@@ -7,6 +7,9 @@ using AutoMapper;
 
 namespace CustomerGet.Service.Apis.ShelteredDepths.Models
 {
+    /// <summary>
+    /// Used by Automapper to clone the Service Customer model to the Website Customer model.
+    /// </summary>
     public class CustomerMappingProfile : Profile
     {
         public CustomerMappingProfile()

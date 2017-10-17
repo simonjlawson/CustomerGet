@@ -18,7 +18,7 @@ namespace CustomerGet.Controllers
 
         public ActionResult Index()
         {
-            var model = new HomeModel();
+            var model = new HomeViewModel();
 
             var customers = CustomerDataFactory.GetAll();
             model.Customers = customers.ListOfCustomers.ToList();
@@ -28,7 +28,7 @@ namespace CustomerGet.Controllers
 
         public ActionResult Customer(string CustomerId)
         {
-            var model = new CustomerModel()
+            var model = new CustomerViewModel()
             {
                 Customer = new Customer()
             };

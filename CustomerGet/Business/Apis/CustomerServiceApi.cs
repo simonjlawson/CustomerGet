@@ -2,29 +2,43 @@
 using System.Threading.Tasks;
 using System;
 using System.Configuration;
+using System.Net.Http.Headers;
+using Newtonsoft.Json;
 
 namespace CustomerGet.Business.Functions
 {
+    /// <summary>
+    /// Accesses the Site's backend Customer API
+    /// </summary>
     public class CustomerServiceApi : ICustomerServiceApi
     {
+        /// <summary>
+        /// Get all Customer Records
+        /// </summary>
+        /// <returns>All Customers in JSon form</returns>
         public async Task<string> GetAllAsync()
         {
             var apiURL = ConfigurationManager.AppSettings["CustomerGetServiceUrl"];
             var client = new HttpClient();
 
             HttpResponseMessage response = await client.GetAsync(apiURL + "GetAll");
-            var x = await response.Content.ReadAsStringAsync();
-            return x;
+            var responseContent = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject(responseContent).ToString();
         }
 
+        /// <summary>
+        /// Get a Customer Record by GUID
+        /// </summary>
+        /// <param name="id">Customer ID</param>
+        /// <returns>A Customer in json form</returns>
         public async Task<string> GetAsync(Guid id)
         {
             var apiURL = ConfigurationManager.AppSettings["CustomerGetServiceUrl"];
             var client = new HttpClient();
 
             HttpResponseMessage response = await client.GetAsync(apiURL + "GetCustomer?id=" + id);
-            var x = await response.Content.ReadAsStringAsync();
-            return x;
+            var responseContent = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject(responseContent).ToString();
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace CustomerGet.Models
 {
-    public class CustomerModel
+    public class CustomerViewModel
     {
         public Customer Customer { get; set; }
     }

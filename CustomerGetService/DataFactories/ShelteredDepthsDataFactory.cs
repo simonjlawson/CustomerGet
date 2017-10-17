@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace CustomerGet.Service.DataFactories
 {
+    /// <summary>
+    /// Provides access to the Customer API and serialises into Customer objects
+    /// </summary>
     public class ShelteredDepthsDataFactory : ICustomerDataFactory
     {
         public ICustomerServiceApi Api;
@@ -16,6 +19,11 @@ namespace CustomerGet.Service.DataFactories
             Api = api;
         }
 
+        /// <summary>
+        /// Get a single Customer record
+        /// </summary>
+        /// <param name="id">The GUID for the customer</param>
+        /// <returns>The Customer record for the matching id, return an empty Customer record if unsuccessful</returns>
         public Common.Models.Customer GetCustomer(Guid id)
         {
             CustomerRecord apiCustomer = new CustomerRecord()
@@ -34,19 +42,23 @@ namespace CustomerGet.Service.DataFactories
                     if (customerObj != null)
                         apiCustomer = customerObj;
                 }
-                catch (Exception e)
+                catch
                 {
                     //Failure will return a default object
                 }
             }
 
-            //Map Feed object to Common object
+            //Map Service object to Common object
             Mapper.Initialize(x => { x.AddProfile<CustomerMappingProfile>(); });
             var customer = Mapper.Map<Common.Models.Customer>(apiCustomer.customer);
 
             return customer;
         }
 
+        /// <summary>
+        /// Gets the complete list of Customer records
+        /// </summary>
+        /// <returns></returns>
         public Common.Models.Customers GetCustomers()
         {
             Customers apiCustomers = new Customers()
@@ -65,13 +77,13 @@ namespace CustomerGet.Service.DataFactories
                     if (customersObj != null)
                         apiCustomers = customersObj;
                 }
-                catch (Exception e)
+                catch
                 {
                     //Failure will return a default object
                 }
             }
 
-            //Map Feed object to Common object
+            //Map Service object to Common object
             Mapper.Initialize(x => { x.AddProfile<CustomerMappingProfile>(); });
             var customers = Mapper.Map<Customers, Common.Models.Customers>(apiCustomers);
 
