@@ -7,8 +7,12 @@ A project of three parts to demonstrate communication inbetween a 3rd party API,
 3. Implement IOC in Service - Concreate Objects created in the Azure functions.
 
 ## Getting Started
-The website is running on Azure which can be reached at the following link: customerget.azurewebsites.net
-The backend is running as an Azure function which can be reached at the following link: customergetservice20171015.azurewebsites.net/api/GetAll or Customer?id=<GUID>
+The website is running on Azure which can be reached at the following link:
+http://customerget.azurewebsites.net
+The backend is running as an Azure function which can be reached at the following link: 
+http://customergetservice20171015.azurewebsites.net/api/GetAll?page=0
+http://customergetservice20171015.azurewebsites.net/api/GetCustomer?id=<GUID>
+  
 The code can be run by hitting F5 in Visual Studio 2017. Nuget will fetch the required libraries for you.
 
 ### Prerequisites
