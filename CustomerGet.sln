@@ -7,11 +7,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerGet.Website", "Cust
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerGet.Website.Tests", "CustomerGet.Tests\CustomerGet.Website.Tests.csproj", "{44F0C00A-0CE9-46FD-87E6-0664B730B3B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerGet.Service", "CustomerGetService\CustomerGet.Service.csproj", "{A2C1EEE0-4A0A-48E1-A9D8-F860C4CEFAE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerGet.Service", "CustomerGetService\CustomerGet.Service.csproj", "{A2C1EEE0-4A0A-48E1-A9D8-F860C4CEFAE1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerGet.Service.Tests", "CustomerGetService.Tests\CustomerGet.Service.Tests.csproj", "{6C03B80B-012A-420A-ABFB-ADFBCC8AD9E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerGet.Common", "CustomerGet.Models\CustomerGet.Common.csproj", "{CFA40FFD-6CB0-4EE1-A626-616E9A105871}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerGet.Common", "CustomerGet.Models\CustomerGet.Common.csproj", "{CFA40FFD-6CB0-4EE1-A626-616E9A105871}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E7BCF695-BDCE-4D6D-9F40-9A17FE37D193}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\Desktop\Readme.md = ..\..\..\..\Desktop\Readme.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

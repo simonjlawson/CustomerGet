@@ -9,6 +9,7 @@ using CustomerGet.Service.DataFactories;
 using CustomerGet.Service.Services;
 using CustomerGet.Service.Apis;
 using System.Net.Http.Headers;
+using System.Linq;
 
 namespace CustomerGet.Service
 {
@@ -21,10 +22,17 @@ namespace CustomerGet.Service
 
             try
             {
+                //Parse page parameter and default to 0
+                string pageString = req.GetQueryNameValuePairs()
+                    .FirstOrDefault(q => string.Compare(q.Key, "page", true) == 0)
+                    .Value;
+                int page;
+                int.TryParse(pageString, out page);
+
                 //TODO: Implement IOC
                 var customerDataFactory = new ShelteredDepthsDataFactory(new ShelteredDepthsApi());
                 var customerService = new CustomerService(customerDataFactory);
-                resultJson = customerService.GetCustomers();
+                resultJson = customerService.GetCustomers(page);
             }
             catch (Exception e)
             {

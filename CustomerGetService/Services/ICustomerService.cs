@@ -6,7 +6,7 @@ namespace CustomerGet.Service.Services
 {
     public interface ICustomerService
     {
-        string GetCustomers();
+        string GetCustomers(int page);
 
         string GetCustomer(Guid id);
     }

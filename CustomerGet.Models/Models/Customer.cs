@@ -3,15 +3,6 @@ using System;
 
 namespace CustomerGet.Common.Models
 {
-    ///// <summary>
-    ///// Root Customer Record to help Serialising Customer JSon
-    ///// </summary>
-    //public class CustomerRecord
-    //{
-    //    [JsonProperty("customer")]
-    //    public Customer customer { get; set; }
-    //}
-
     /// <summary>
     /// Standard Customer Model used for CustomerGet.Service
     /// </summary>

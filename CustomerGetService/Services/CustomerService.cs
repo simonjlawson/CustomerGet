@@ -1,6 +1,7 @@
 ﻿using CustomerGet.Service.DataFactories;
 using Newtonsoft.Json;
 using System;
+using System.Linq;
 
 namespace CustomerGet.Service.Services
 {
@@ -9,6 +10,8 @@ namespace CustomerGet.Service.Services
     /// </summary>
     public class CustomerService : ICustomerService
     {
+        private int PageSize = 100;
+
         public ICustomerDataFactory DataFactory { get; }
 
         public CustomerService(ICustomerDataFactory dataFactory)
@@ -31,10 +34,23 @@ namespace CustomerGet.Service.Services
         /// <summary>
         /// Get all Customer records serialise to JSon
         /// </summary>
+        /// <param name="page">Page number of the Results, starts at 0</param>
         /// <returns>A JSon string</returns>
-        public string GetCustomers()
+        public string GetCustomers(int page = 0)
         {
             var customers = DataFactory.GetCustomers();
+            var totalCustomers = customers.ListOfCustomers.Count();
+
+            //Cap the range of possible page numbers
+            var maxPage = (totalCustomers / PageSize);
+            if (page < 0)
+                page = 0;
+            if (page > maxPage)
+                page = maxPage;
+            
+            //Paginate the results
+            customers.ListOfCustomers = customers.ListOfCustomers.Skip(page * PageSize).Take(PageSize);
+
             var customersJson = JsonConvert.SerializeObject(customers);
             return customersJson;
         }

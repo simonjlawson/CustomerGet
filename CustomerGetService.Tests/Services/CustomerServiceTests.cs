@@ -70,6 +70,48 @@ namespace CustomerGet.Service.Tests.Services
         }
 
         [TestMethod]
+        public void GetCustomersReturns216ObjectsPaginatesFirst100()
+        {
+            //Setup
+            var customersJson = File.ReadAllText("Json/customers216.json");
+            var customerApi = new Mock<ICustomerServiceApi>();
+            customerApi.Setup(arg => arg.GetCustomersAsync())
+                .Returns(Task.FromResult(customersJson));
+
+            //Run
+            var customerDataFactory = new ShelteredDepthsDataFactory(customerApi.Object);
+            var customerService = new CustomerService(customerDataFactory);
+            var resultJson = customerService.GetCustomers(0);
+
+            //Has Completed
+            Assert.IsNotNull(resultJson, "Json incorrectly returns null for valid API response");
+            //Has Content
+            Assert.IsTrue(resultJson.Length > 0, "Json incorrectly returns empty for valid API response");
+            Assert.IsTrue(resultJson.Length <= 11565, "Json is larger than expected for 100 static results");
+        }
+
+        [TestMethod]
+        public void GetCustomersReturns216ObjectsPaginates200To216()
+        {
+            //Setup
+            var customersJson = File.ReadAllText("Json/customers216.json");
+            var customerApi = new Mock<ICustomerServiceApi>();
+            customerApi.Setup(arg => arg.GetCustomersAsync())
+                .Returns(Task.FromResult(customersJson));
+
+            //Run
+            var customerDataFactory = new ShelteredDepthsDataFactory(customerApi.Object);
+            var customerService = new CustomerService(customerDataFactory);
+            var resultJson = customerService.GetCustomers(2);
+
+            //Has Completed
+            Assert.IsNotNull(resultJson, "Json incorrectly returns null for valid API response");
+            //Has Content
+            Assert.IsTrue(resultJson.Length > 0, "Json incorrectly returns empty for valid API response");
+            Assert.IsTrue(resultJson.Length <= 1863, "Json is larger than expected for 100 static results");
+        }
+
+        [TestMethod]
         public void GetCustomersWithEmptyApiResultReturnsNullObject()
         {
             //Setup
