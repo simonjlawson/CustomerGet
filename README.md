@@ -3,7 +3,7 @@ A project of three parts to demonstrate communication inbetween a 3rd party API,
 
 ## Roadmap
 1. Release to Production (completed)
-2. Scale Implementation (50%) - Service accepts pagination, website neds to send the parameter.
+2. Scale Implementation (50%) - Service accepts pagination, website nesds to send the parameter.
 3. Implement IOC in Service - Concreate Objects created in the Azure functions.
 
 ## Getting Started
