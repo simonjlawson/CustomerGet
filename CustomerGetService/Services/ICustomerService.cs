@@ -9,5 +9,7 @@ namespace CustomerGet.Service.Services
         string GetCustomers(int page);
 
         string GetCustomer(Guid id);
+
+        bool PutCustomer(Guid id, string firstname);
     }
 }

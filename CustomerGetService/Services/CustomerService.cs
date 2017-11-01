@@ -54,5 +54,12 @@ namespace CustomerGet.Service.Services
             var customersJson = JsonConvert.SerializeObject(customers);
             return customersJson;
         }
+
+        public string PutCustomer(Guid id, string firstname)
+        {
+            var customer = DataFactory.PutCustomer(id, firstname);
+            var customerJson = JsonConvert.SerializeObject(customer);
+            return customerJson;
+        }
     }
 }

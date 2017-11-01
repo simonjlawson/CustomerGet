@@ -9,5 +9,7 @@ namespace CustomerGet.Business.Functions
         Customer Get(Guid id);
 
         Customers GetAll();
+
+        void Save(Customer customer)
     }
 }

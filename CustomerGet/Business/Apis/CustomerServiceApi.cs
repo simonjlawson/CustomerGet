@@ -4,6 +4,7 @@ using System;
 using System.Configuration;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
+using CustomerGet.Common.Models;
 
 namespace CustomerGet.Business.Functions
 {
@@ -39,6 +40,23 @@ namespace CustomerGet.Business.Functions
             HttpResponseMessage response = await client.GetAsync(apiURL + "GetCustomer?id=" + id);
             var responseContent = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject(responseContent).ToString();
+        }
+
+        public async Task<bool> PutAsync(Customer customer)
+        {
+            var apiURL = ConfigurationManager.AppSettings["CustomerGetServiceUrl"];
+            var client = new HttpClient();
+
+            try
+            {
+                HttpResponseMessage response = await client.PutAsync(apiURL + "PutCustomer?id=" + customer.id + "&firstname=" + customer.FirstName);
+                var responseContent = await response.Content.ReadAsStringAsync();
+                return responseContent == "true";
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }

@@ -30,7 +30,7 @@
             Firstname
         </td>
         <td>
-            @Model.Customer.FirstName
+            <input id="txtFirstname" runat="server" name="txtFirstname" value="@Model.Customer.FirstName">
         </td>
     </tr>
     <tr>
@@ -50,3 +50,5 @@
         </td>
     </tr>
 </table>
+
+<button id="btnSave" runat="server">Save</button>

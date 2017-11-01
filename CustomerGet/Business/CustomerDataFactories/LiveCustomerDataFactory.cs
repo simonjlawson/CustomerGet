@@ -78,5 +78,32 @@ namespace CustomerGet.Business.Functions
 
             return customer;
         }
-    }
+
+        public bool Save(Customer customer)
+        {
+
+            try
+            {
+                var task = Task.Run(() => Api.PutAsync(customer));
+                task.Wait(5000);
+
+                if (task.IsCompleted)
+                {
+                    if (task.Result)
+                    {
+                        return true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                //Log.Error(ex);
+                //Failure returns a default object
+            }
+
+            return false;
+        }
+
+        }
 }

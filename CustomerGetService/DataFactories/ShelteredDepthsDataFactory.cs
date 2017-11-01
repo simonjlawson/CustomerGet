@@ -101,5 +101,36 @@ namespace CustomerGet.Service.DataFactories
 
             return customers;
         }
+
+        public bool PutCustomer(Guid id, string firstname)
+        {
+            CustomerRecord apiCustomer = new CustomerRecord()
+            { customer = new Customer { id = id.ToString() } };
+
+            var apiResult = Task.Run(() => Api.GetCustomerAsync(id));
+
+            //For the sake of example added a 5 second timeout for calling functions
+            apiResult.Wait(5000);
+
+            if (apiResult.IsCompleted)
+            {
+                try
+                {
+                    var customerObj = JsonConvert.DeserializeObject<CustomerRecord>(apiResult.Result);
+                    if (customerObj != null)
+                        apiCustomer = customerObj;
+                }
+                catch
+                {
+                    //Failure will return a default object
+                }
+            }
+
+            //Map Service object to Common object
+            Mapper.Initialize(x => { x.AddProfile<CustomerMappingProfile>(); });
+            var customer = Mapper.Map<Common.Models.Customer>(apiCustomer.customer);
+
+            return customer;
+        }
     }
 }

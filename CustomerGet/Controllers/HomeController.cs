@@ -42,5 +42,18 @@ namespace CustomerGet.Controllers
 
             return View(model);
         }
+
+        public ActionResult Save(string customerId, string txtFirstname)
+        {
+            var customerModel = new CustomerViewModel();
+            customerModel.Customer = new Common.Models.Customer();
+            customerModel.Customer.id = customerId;
+            customerModel.Customer.FirstName = txtFirstname;
+                CustomerDataFactory.Save(customerModel.Customer);
+
+
+            string.IsNullOrEmpty()
+            return Index();
+        }
     }
-}
+    }
