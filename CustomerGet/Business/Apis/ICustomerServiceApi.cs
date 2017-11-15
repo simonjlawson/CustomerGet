@@ -12,6 +12,6 @@ namespace CustomerGet.Business.Functions
 
         Task<string> GetAsync(Guid id);
 
-        bool PutAsync(Customer customer);
+        Task<bool> PutAsync(Customer customer);
     }
 }

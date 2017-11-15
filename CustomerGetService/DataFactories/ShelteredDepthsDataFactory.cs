@@ -107,7 +107,7 @@ namespace CustomerGet.Service.DataFactories
             CustomerRecord apiCustomer = new CustomerRecord()
             { customer = new Customer { id = id.ToString() } };
 
-            var apiResult = Task.Run(() => Api.GetCustomerAsync(id));
+            var apiResult = Task.Run(() => Api.PutCustomersAsync(id, firstname));
 
             //For the sake of example added a 5 second timeout for calling functions
             apiResult.Wait(5000);
@@ -116,21 +116,17 @@ namespace CustomerGet.Service.DataFactories
             {
                 try
                 {
-                    var customerObj = JsonConvert.DeserializeObject<CustomerRecord>(apiResult.Result);
-                    if (customerObj != null)
-                        apiCustomer = customerObj;
+                    var customerObj = JsonConvert.DeserializeObject<string>(apiResult.Result);
+                    //We do not know the response so if not empty assume success
+                    return (!string.IsNullOrEmpty(customerObj));
                 }
                 catch
                 {
-                    //Failure will return a default object
+                    return false;
                 }
             }
-
-            //Map Service object to Common object
-            Mapper.Initialize(x => { x.AddProfile<CustomerMappingProfile>(); });
-            var customer = Mapper.Map<Common.Models.Customer>(apiCustomer.customer);
-
-            return customer;
+            
+            return false;
         }
     }
 }

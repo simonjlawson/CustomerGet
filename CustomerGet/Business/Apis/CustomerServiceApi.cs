@@ -49,7 +49,7 @@ namespace CustomerGet.Business.Functions
 
             try
             {
-                HttpResponseMessage response = await client.PutAsync(apiURL + "PutCustomer?id=" + customer.id + "&firstname=" + customer.FirstName);
+                HttpResponseMessage response = await client.GetAsync(apiURL + "PutCustomer?id=" + customer.id + "&firstname=" + customer.FirstName);
                 var responseContent = await response.Content.ReadAsStringAsync();
                 return responseContent == "true";
             }

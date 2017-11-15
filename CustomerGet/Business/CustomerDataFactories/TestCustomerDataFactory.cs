@@ -34,5 +34,11 @@ namespace CustomerGet.Business.Functions
             var customer = JsonConvert.DeserializeObject<Customer>(fileJson);
             return customer;
         }
+
+        public bool Save(Customer customer)
+        {
+            //Not implemented
+            return true;
+        }
     }
 }

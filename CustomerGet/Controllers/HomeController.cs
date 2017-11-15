@@ -50,9 +50,7 @@ namespace CustomerGet.Controllers
             customerModel.Customer.id = customerId;
             customerModel.Customer.FirstName = txtFirstname;
                 CustomerDataFactory.Save(customerModel.Customer);
-
-
-            string.IsNullOrEmpty()
+            
             return Index();
         }
     }

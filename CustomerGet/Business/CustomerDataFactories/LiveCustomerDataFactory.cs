@@ -97,13 +97,11 @@ namespace CustomerGet.Business.Functions
             }
             catch (Exception ex)
             {
-
-                //Log.Error(ex);
-                //Failure returns a default object
+                //Log.Error(ex);   
             }
 
             return false;
         }
 
-        }
+    }
 }

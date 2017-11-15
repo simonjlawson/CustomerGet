@@ -10,6 +10,6 @@ namespace CustomerGet.Business.Functions
 
         Customers GetAll();
 
-        void Save(Customer customer)
+        bool Save(Customer customer);
     }
 }

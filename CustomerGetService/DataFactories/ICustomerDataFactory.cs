@@ -9,5 +9,7 @@ namespace CustomerGet.Service.DataFactories
         Customers GetCustomers();
 
         Customer GetCustomer(Guid id);
+
+        bool PutCustomer(Guid id, string firstname);
     }
 }

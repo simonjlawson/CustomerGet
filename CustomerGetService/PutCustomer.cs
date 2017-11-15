@@ -32,13 +32,13 @@ namespace CustomerGet.Service
             if (!Guid.TryParse(id, out idGuid))
                 return req.CreateResponse(HttpStatusCode.BadRequest, "Id is not a valid");
 
-            string resultJson = null;
+            bool result = false;
             try
             {
                 //TODO: Implement IOC
                 var customerDataFactory = new ShelteredDepthsDataFactory(new ShelteredDepthsApi());
                 var customerService = new CustomerService(customerDataFactory);
-                resultJson = customerService.PutCustomer(idGuid, firstname);
+                result = customerService.PutCustomer(idGuid, firstname);
             }
             catch (Exception e)
             {
@@ -47,9 +47,7 @@ namespace CustomerGet.Service
             }
 
             var jsonFormatter = new System.Net.Http.Formatting.JsonMediaTypeFormatter();
-            return resultJson == null
-                ? req.CreateResponse(HttpStatusCode.BadRequest, "Empty Data")
-                : req.CreateResponse(HttpStatusCode.OK, resultJson, jsonFormatter, new MediaTypeWithQualityHeaderValue("application/json"));
+            return req.CreateResponse(HttpStatusCode.OK, result, jsonFormatter, new MediaTypeWithQualityHeaderValue("application/json"));
         }
     }
 }
